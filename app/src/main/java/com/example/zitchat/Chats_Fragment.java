@@ -42,7 +42,9 @@ public class Chats_Fragment extends Fragment {
 
         ArrayList<Contact> basearray = new ArrayList<Contact>();
         basearray.add(mycontact);
+        Contact mycontact1 = new Contact(1,"Igor","Hi");
 
+        basearray.add(mycontact1);
 
         ChatsAdapter chatsadapter = new ChatsAdapter(getContext(),basearray);
         recViewJobs.setAdapter(chatsadapter);
