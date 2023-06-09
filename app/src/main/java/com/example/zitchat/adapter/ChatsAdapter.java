@@ -12,22 +12,19 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.example.zitchat.R;
+import com.example.zitchat.domain.Contact;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class ChatsAdapter extends RecyclerView.Adapter<ChatsAdapter.ViewHolder> {
-
-    private List<Integer> mViewImg;
-    private ArrayList<Order> list2d;
-    private List<String> mJobs1;
-    private List<String> mJobs2;
-    private List<String> mJobs3;
+    private ArrayList<Contact> list2d;
     private LayoutInflater mInflater;
     private Context context;
     private ItemClickListener mClickListener;
 
-    public ChatsAdapter(Context context, ArrayList<Order> list2d) {
+    public ChatsAdapter(Context context, ArrayList<Contact> list2d) {
         this.mInflater = LayoutInflater.from(context);
         this.context = context;
         this.list2d = list2d;
@@ -37,7 +34,7 @@ public class ChatsAdapter extends RecyclerView.Adapter<ChatsAdapter.ViewHolder> 
     @Override
     @NonNull
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = mInflater.inflate(R.layout.rec_item, parent, false);
+        View view = mInflater.inflate(R.layout.all_chats_items, parent, false);
         return new ViewHolder(view);
     }
 
@@ -50,31 +47,9 @@ public class ChatsAdapter extends RecyclerView.Adapter<ChatsAdapter.ViewHolder> 
         String text1 = list2d.get(position).getName();
 
         holder.myimgres.setImageResource(R.drawable.flag_russia);
-        if(list2d.get(position).getMsg().equals("none") == false && list2d.get(position).getMsg().equals("gs://neighbours-f1462.appspot.com/images/image5.jpg") == false ){
-            FirebaseStorage storage = FirebaseStorage.getInstance();
-            StorageReference storageRef = storage.getReferenceFromUrl("gs://neighbours-f1462.appspot.com");
-            StorageReference imageRef = storageRef.child(list2d.get(position).getMsg());
 
-            Task<Uri> uriTask = imageRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-                @Override
-                public void onSuccess(Uri uri) {
-                    String downloadUrl = uri.toString();
-                           .load(downloadUrl)
-                            .into(holder.myimgres);
-                    System.out.println("OK");
-                    // здесь вы можете использовать полученную ссылку на файл
-                }
-            }).addOnFailureListener(new OnFailureListener() {
-                @Override
-                public void onFailure(@NonNull Exception exception) {
-                    System.out.println("ERRERER");// обработка ошибок получения ссылки на файл
-                }
-            });
-
-        }
-        Glide.with(context)
-
-        holder.myTextView.setText(text1);
+        holder.myTextViewName.setText(list2d.get(position).getName());
+        holder.myTextViewLastMsg.setText(list2d.get(position).getLastmsg());
     }
 
 
@@ -90,14 +65,15 @@ public class ChatsAdapter extends RecyclerView.Adapter<ChatsAdapter.ViewHolder> 
         ImageView myimgresof1;
 
         ImageView myimgresof2;
-        TextView myTextView;
-        TextView myTextView1;
+        TextView myTextViewName;
+        TextView myTextViewLastMsg;
         TextView myTextView2;
 
         ViewHolder(View itemView) {
             super(itemView);
             myimgres = itemView.findViewById(R.id.imageres);
-            myTextView = itemView.findViewById(R.id.tvname1);
+            myTextViewName = itemView.findViewById(R.id.tvname1);
+            myTextViewLastMsg = itemView.findViewById(R.id.tvmsg1);
             itemView.setOnClickListener(this);
         }
 

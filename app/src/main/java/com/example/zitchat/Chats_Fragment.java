@@ -10,8 +10,13 @@ import android.widget.Button;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.zitchat.adapter.ChatsAdapter;
 import com.example.zitchat.dialogs.AddPerson;
+import com.example.zitchat.domain.Contact;
+
+import java.util.ArrayList;
 
 public class Chats_Fragment extends Fragment {
     Context mContext;
@@ -31,6 +36,16 @@ public class Chats_Fragment extends Fragment {
 
         super.onCreate(savedInstanceState);
         View rootView = inflater.inflate(R.layout.chats, container, false);
+        RecyclerView recViewJobs = rootView.findViewById(R.id.rvJobs);
+        //example
+        Contact mycontact = new Contact(1,"Egor","Hi");
+
+        ArrayList<Contact> basearray = new ArrayList<Contact>();
+        basearray.add(mycontact);
+
+
+        ChatsAdapter chatsadapter = new ChatsAdapter(getContext(),basearray);
+        recViewJobs.setAdapter(chatsadapter);
 
 
         Button b = rootView.findViewById(R.id.button_add);
